@@ -150,11 +150,13 @@ http://127.0.0.1:8000/admin/
 
 ## 📸 Screenshots
 
-_Add screenshots here after uploading them to a `screenshots` folder._
+[Home Page](screenshots/dashboard.png)
+[Browse Users](screenshots/browse_users.png)
+[Accepting/Rejecting Barters](screenshots/accept.png)
+[Messaging](screenshots/messages.png)
+[Completed Barters](screenshots/complete.png)
+[Feedback](screenshots/feedback.png)
 
-```
-![Home Page](screenshots/home.png)
-```
 
 ---
 
