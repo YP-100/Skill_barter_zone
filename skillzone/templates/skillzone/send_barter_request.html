@@ -1,0 +1,66 @@
+{% extends 'partials/base.html' %}
+{% block title %}Request Barter{% endblock %}
+{% block content %}
+
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+
+      <div class="sbz-card">
+        <div class="sbz-card-header">
+          <h2 class="sbz-card-title mb-0">Request Barter</h2>
+        </div>
+
+        <div class="sbz-card-body">
+
+          <p class="mb-3">
+            You are requesting a barter with
+            <strong>{{ user_to.username }}</strong>.
+          </p>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Choose which skill you want to learn from the user -->
+            <div class="form-group">
+              <label for="skill_to">Select skill to learn:</label>
+              <select name="skill_to" id="skill_to" class="form-control" required>
+                <option value="">-- Select a Skill --</option>
+
+                {% for s in user_to_skills %}
+                <option value="{{ s.id }}"
+                  {% if preselected_skill and preselected_skill.id == s.id %}selected{% endif %}
+                >
+                  {{ s.name }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Choose which skill you offer -->
+            <div class="form-group mt-3">
+              <label for="skill_from">Select your skill to offer:</label>
+              <select name="skill_from" id="skill_from" class="form-control" required>
+                <option value="">-- Select Your Skill --</option>
+
+                {% for s in my_skills %}
+                <option value="{{ s.id }}">{{ s.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+              <a href="{% url 'skillzone:home' %}" class="btn btn-secondary mr-2">Cancel</a>
+              <button type="submit" class="btn sbz-btn-primary">Send Request</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

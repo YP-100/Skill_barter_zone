@@ -1,0 +1,49 @@
+{% extends 'partials/base.html' %}
+{% block title %}Give Feedback{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="sbz-card">
+        <div class="sbz-card-header">
+          <h2 class="sbz-card-title mb-0">
+            Feedback for Barter #{{ barter.id }}
+          </h2>
+        </div>
+        <div class="sbz-card-body">
+          <form method="post" class="sbz-form">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_rating">Rating (0–5)</label>
+              <input
+                type="number"
+                step="0.5"
+                min="0"
+                max="5"
+                name="rating"
+                id="id_rating"
+                class="form-control sbz-input"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label for="id_comment">Comment</label>
+              <textarea
+                name="comment"
+                id="id_comment"
+                rows="4"
+                class="form-control sbz-input"
+                required
+              ></textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+              <a href="{% url 'skillzone:completed_barters' %}" class="btn sbz-btn-text mr-2">Cancel</a>
+              <button type="submit" class="btn sbz-btn-primary">Submit Feedback</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

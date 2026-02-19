@@ -1,0 +1,47 @@
+{% extends 'partials/base.html' %}
+{% block title %}Inbox{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="sbz-page-title">Inbox</h1>
+    </div>
+  </div>
+  <div class="sbz-card">
+    <div class="sbz-card-body p-0">
+      {% if messages %}
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>Message</th>
+            <th>Received</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in messages %}
+          <tr>
+            <td>
+              <a href="{% url 'skillzone:conversation' m.sender.id %}">
+                {{ m.sender.username }}
+              </a>
+            </td>
+            <td>
+              <a href="{% url 'skillzone:conversation' m.sender.id %}">
+                {{ m.body|truncatechars:60 }}
+              </a>
+            </td>
+            <td>{{ m.created_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="p-4">
+        <p class="mb-0 text-muted">No messages yet.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'partials/base.html' %}
+{% block title %}Request Barter{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="sbz-card">
+        <div class="sbz-card-header">
+          <h2 class="sbz-card-title mb-0">Request Barter</h2>
+        </div>
+        <div class="sbz-card-body">
+          <p class="mb-3">
+            You are requesting to learn
+            <strong>{{ skill_to.name }}</strong>
+            from
+            <strong>{{ user_to.username }}</strong>.
+          </p>
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="skill_from">Which of your skills will you teach in exchange?</label>
+              <select name="skill_from" id="skill_from" class="form-control" required>
+                {% for my in my_skills %}
+                <option value="{{ my.id }}">{{ my.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+              <a href="{% url 'skillzone:home' %}" class="btn btn-secondary mr-2">Cancel</a>
+              <button type="submit" class="btn sbz-btn-primary">Send Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

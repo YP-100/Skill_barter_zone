@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+{% block title %}My Barters{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row">
+    <div class="col-12">
+      <div class="sbz-page-header d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h1 class="sbz-page-title">My Barters</h1>
+          <p class="sbz-page-subtitle mb-0">
+            All barter requests you have sent or received.
+          </p>
+        </div>
+      </div>
+      <div class="sbz-card">
+        <div class="sbz-card-body p-0">
+          {% if barters %}
+          <div class="table-responsive">
+            <table class="table mb-0 sbz-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Status</th>
+                  <th>Requested On</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for barter in barters %}
+                <tr>
+                  <td>{{ barter.id }}</td>
+                  <td>{{ barter.user_from }}</td>
+                  <td>{{ barter.user_to }}</td>
+                  <td>
+                    <span class="sbz-chip sbz-chip-{{ barter.status|lower }}">
+                      {{ barter.status }}
+                    </span>
+                  </td>
+                  <td>{{ barter.date_requested|date:"d M Y, H:i" }}</td>
+                  <td>
+                    {# Pending: only receiver can accept / reject #}
+                    {% if barter.status == "Pending" and request.user == barter.user_to %}
+                      <a href="{% url 'skillzone:update_barter_status' barter.id 'Accepted' %}" class="btn btn-sm btn-success mr-2">
+                        ✔ Accept
+                      </a>
+                      <a href="{% url 'skillzone:update_barter_status' barter.id 'Rejected' %}" class="btn btn-sm btn-danger">
+                        ✖ Reject
+                      </a>
+                    {% endif %}
+
+                    {# Accepted: either participant can mark completed #}
+                    {# Accepted: either participant can mark completed #}
+{% if barter.status == "Accepted" and request.user == barter.user_from %}
+  <a href="{% url 'skillzone:update_barter_status' barter.id 'Completed' %}" class="btn btn-sm btn-primary">
+    ✓ Mark Completed
+  </a>
+{% elif barter.status == "Accepted" and request.user == barter.user_to %}
+  <a href="{% url 'skillzone:update_barter_status' barter.id 'Completed' %}" class="btn btn-sm btn-primary">
+    ✓ Mark Completed
+  </a>
+{% endif %}
+
+
+                    {# Completed: feedback handled on Completed Barters page #}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="p-4">
+            <p class="text-muted mb-0">You don't have any barters yet.</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

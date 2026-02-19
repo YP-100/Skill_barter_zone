@@ -1,0 +1,136 @@
+{% extends 'partials/base.html' %}
+{% block title %}Skill Barter Zone - Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="sbz-page-header d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="sbz-page-title">Skill Barter Zone</h1>
+          <p class="sbz-page-subtitle mb-0">Exchange skills, grow together.</p>
+        </div>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'skillzone:add_skill' %}" class="btn sbz-btn-primary">
+          + Add Skill
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <form method="get" class="form-inline">
+        <div class="input-group w-100">
+          <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            class="form-control"
+            placeholder="Search skills or users..."
+          />
+          <div class="input-group-append">
+            <button class="btn sbz-btn-primary" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="sbz-card">
+      <div class="sbz-card-header d-flex justify-content-between align-items-center">
+        <h2 class="sbz-card-title mb-0">My Skills</h2>
+      </div>
+      <div class="sbz-card-body">
+        {% if request.user.is_authenticated %}
+          {% if my_skills %}
+          <div class="row">
+            {% for skill in my_skills %}
+            <div class="col-md-4 mb-3">
+              <div class="sbz-skill-chip">
+                <div class="sbz-skill-name">{{ skill.name }}</div>
+                {% if skill.description %}
+                <div class="sbz-skill-description">
+                  {{ skill.description|truncatechars:80 }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p class="text-muted mb-0">
+            You have not added any skills yet. Use the "Add Skill" button above to get started.
+          </p>
+          {% endif %}
+        {% else %}
+        <p class="text-muted mb-0">
+          Please log in to add your own skills and start bartering.
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="sbz-card">
+      <div class="sbz-card-header d-flex justify-content-between align-items-center">
+        <h2 class="sbz-card-title mb-0">Skills from other users</h2>
+      </div>
+      <div class="sbz-card-body">
+        {% if skills %}
+        <div class="row">
+          {% for skill in skills %}
+          <div class="col-md-4 mb-3">
+            <div class="sbz-skill-chip">
+              <div class="sbz-skill-name">{{ skill.name }}</div>
+              {% if skill.description %}
+              <div class="sbz-skill-description">
+                {{ skill.description|truncatechars:80 }}
+              </div>
+              {% endif %}
+              {% if skill.user %}
+              <div class="small text-muted mt-1">
+                Offered by
+                <a href="{% url 'skillzone:user_detail' skill.user.id %}">
+                  {{ skill.user.username }}
+                </a>
+              </div>
+              {% endif %}
+              {% if request.user.is_authenticated and skill.user and skill.user != request.user %}
+              <div class="mt-2 d-flex flex-wrap">
+                <a
+                  href="{% url 'skillzone:send_barter_request' skill.id skill.user.id %}"
+                  class="btn btn-sm sbz-btn-primary mr-2 mb-2"
+                >
+                  Request Barter
+                </a>
+                <a
+                  href="{% url 'skillzone:conversation' skill.user.id %}"
+                  class="btn btn-sm btn-outline-light mb-2"
+                >
+                  Message
+                </a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted mb-0">
+          No skills from other users yet. Once others add their skills, you will be able to barter here.
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+{% endblock %}

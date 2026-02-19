@@ -1,0 +1,67 @@
+{% extends 'partials/base.html' %}
+{% block title %}Browse Users{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-4 min-vh-100">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="sbz-page-header d-flex justify-content-between align-items-center">
+        <h1 class="sbz-page-title">Browse Users</h1>
+        <form method="get" class="form-inline">
+          <div class="input-group">
+            <input
+              type="text"
+              name="q"
+              value="{{ query }}"
+              class="form-control"
+              placeholder="Search by name, username, or skill"
+            />
+            <div class="input-group-append">
+              <button class="btn sbz-btn-primary" type="submit">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="sbz-card">
+    <div class="sbz-card-body p-0">
+      {% if users %}
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Full name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          {% if u != request.user %}
+          <tr>
+            <td>{{ u.username }}</td>
+            <td>
+              {% if u.profilemodel %}{{ u.profilemodel.full_name }}{% else %}-{% endif %}
+            </td>
+            <td>
+              <a href="{% url 'skillzone:user_detail' u.id %}" class="btn btn-sm btn-outline-light mr-2">
+                View Profile
+              </a>
+              <a href="{% url 'skillzone:conversation' u.id %}" class="btn btn-sm sbz-btn-primary">
+                Message
+              </a>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="p-4">
+        <p class="mb-0 text-muted">No users found.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
