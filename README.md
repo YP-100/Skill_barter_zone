@@ -150,12 +150,33 @@ http://127.0.0.1:8000/admin/
 
 ## 📸 Screenshots
 
-[Home Page](screenshots/dashboard.png)
-[Browse Users](screenshots/browse_users.png)
-[Accepting/Rejecting Barters](screenshots/accept.png)
-[Messaging](screenshots/messages.png)
-[Completed Barters](screenshots/complete.png)
-[Feedback](screenshots/feedback.png)
+### 🏠 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+### 👥 Browse Users
+![Browse Users](screenshots/browse_users.png)
+
+---
+
+### 🔄 Accept / Reject Barters
+![Barter Approval](screenshots/accept.png)
+
+---
+
+### 💬 Messaging System
+![Messaging](screenshots/messages.png)
+
+---
+
+### ✅ Completed Barters
+![Completed](screenshots/complete.png)
+
+---
+
+### ⭐ Feedback & Ratings
+![Feedback](screenshots/feedback.png)
 
 
 ---
