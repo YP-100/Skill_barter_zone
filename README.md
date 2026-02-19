@@ -183,9 +183,3 @@ _Add screenshots here after uploading them to a `screenshots` folder._
 ## 📄 License
 
 This project is for educational purposes.
-
----
-
-## 💼 Resume Description
-
-Developed a Django-based peer-to-peer skill exchange web application featuring authentication, barter management, private messaging, and feedback system.
